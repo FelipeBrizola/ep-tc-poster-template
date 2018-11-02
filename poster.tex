@@ -6,11 +6,11 @@
 
 % \newcommand\itemadjust{\itemsep.5em \parskip0pt \parsep0pt}
 
-\title{Seu Título Aqui}
-\author{Nome do Aluno 1, Nome do Aluno2}
-% \major{Ciência da Computação}
-\major{Ciência da Computação/Engenharia da Computação/Engenharia Elétrica/...}
-\advisor{Nome do Orientador}
+\title{Mapeamento de recursos sob computação em névoa}
+\author{Felipe Brizola Bergues Duro}
+\major{Ciência da Computação}
+% \major{Ciência da Computação/Engenharia da Computação/Engenharia Elétrica/...}
+\advisor{Prof. Dr. Sérgio Johann Filho}
 
 \themecolor{NavyBlue}
 \unilogo{fig/ep-logo.pdf}
@@ -26,158 +26,93 @@
 %	MOTIVAÇÃO
 %---------------------------------------------------------------
 % \color{NavyBlue}
-\section*{Seção 1}
+\section*{Introdução}
 % \color{Black}
 \Large
 \justifying
-
 \begin{itemize}
-	\item Ponto 1;
-	\item Ponto 2;
-	\item 
-\end{itemize}
 
-%---------------------------------------------------------------
-%   AGENTES
-%---------------------------------------------------------------
-\section*{\huge Seção 2}
-
-\begin{itemize}
-	\item Idéia 1; e
-	\item Idéia 2.
-\end{itemize}
-
-%---------------------------------------------------------------
-%	AgentSpeak(L)
-%---------------------------------------------------------------
-\section*{\huge Seção 3}
-
-\begin{itemize}
-	\item É uma linguagem abstrata de programação orientada a agentes baseada na arquitetura BDI;
-	\item Os programas desenvolvidos utilizando a linguagem, como exemplificado no Código~\ref{alg:exemplo-hello-world}, são especificados por um conjunto de crenças, planos, eventos ativadores e ações que o agente executa no ambiente;
-	%\item Rao \cite{article:Rao:1996} introduz as noções básicas para especificação desses conjuntos a partir das definições apresentadas na Tabela~\ref{tab:sintaxe-agentsepak}.
-	\item As definições da Tabela~\ref{tab:sintaxe-agentsepak} são utilizadas para especificar estes conjuntos.
-\end{itemize}
-
-\vspace{13mm}
-
-
-\begin{itemize}
-	\item Mais idéias...:
-	\begin{enumerate}
-		% [leftmargin=2em]\itemadjust
-		\item Idéia 1;
-		\item Idéia 2; 
-		\item Idéia 3; e
-		\item Idéia 4.
-	\end{enumerate}	
-	\item A Figura~\ref{fig:minhafigura} ilustra isto.
-\end{itemize}
-\vspace{13mm}
+\item A computação em névoa é um termo relativamente novo e teve sua primeira definição, dada pela Cisco Systems em 2012, como uma extensão do modelo de computação em nuvem que provê armazenamento, computação e serviços de rede entre dispositivos finais e os servidores na nuvem \cite{DBLP:journals/corr/RomanLM16}.
+\item A computação em névoa tornou-se um paradigma próprio deixando de ser um apêndice da computação em nuvem. Deste novo paradigma surgiu o termo de \textit{fog node}, que abrange desde dispositivos finais com baixa capacidade computacional até servidores poderosos na nuvem.
+\item Os problemas referentes à padronização, descoberta e sincronização são os motivadores deste trabalho, uma vez que atualmente não existem mecanismos no qual um membro da névoa, seja ele um dispositivo com limitações de memória e processamento ou um computador robusto, mapeiem os recursos disponíveis e divulgue os seus na rede.
+\item Para que este objetivo fosse atingido, foi projetado um protocolo de rede simples que é executado em redes locais e que atua de maneira automatizada e desentralizada no processo de descobrimento e sincronização de recursos.
+\item A computação em névoa pode ser ilustrada pela imagem abaixo, na qual demonstra uma arquitetura base deste cenário.
 
 \begin{center}
-	%\includegraphics[width=0.99\linewidth]{fig/minha-figura.pdf}
-	\Huge Figura Aqui (include comentado)
-	\captionof{figure}{Exemplo de Figura.}
-	\label{fig:minhafigura}
-\end{center}	
+\includegraphics[width=0.9\linewidth]{fig/fig1.pdf}
+\end{center}
 
 
-\section*{Seção 3}
+\item A comunicação entre os \textit{fog nodes} e seus sensores, comumente chamados de \textit{edge devices}, ocorre utilizando o protocolo CoAP - Constrained Application Protocol.
 
-\begin{itemize}
-	\item Mais idéias...:
-	\begin{enumerate}
-		% [leftmargin=2em]\itemadjust
-		\item Idéia 1;
-		\item Idéia 2; 
-		\item Idéia 3; e
-		\item Idéia 4.
-	\end{enumerate}	
-	\item A Figura~\ref{fig:minhafigura} ilustra isto.
+\item O CoAP implementa a RFC-6690 - Constrained RESTful Environments (CoRE) Link Format - que possui como finalidade a realização de REST em nodos com recursos limitados\cite{rfc6690}.
+\item CoAP também implementa a RFC-5785 que define como URI padrão o prefixo /.well-known/core. Este prefixo é utilizado para que o servidor exponha suas políticas e recursos disponíveis\cite{rfc5785}.
+
+% \item explicar o impacto disso, acessar recursos de outros nodes, manter o mapeamento de recursos, etc...
+
 \end{itemize}
 
+\section*{\huge Protocolo Proposto}
 
-\vspace{13mm}
-\noindent\begin{minipage}{.235\textwidth}
-	\begin{minipage}{\textwidth}
-		\lstset{style=codeStyle}
-		\begin{lstlisting}[language=Prolog, label={alg:exemplo-hello-world}, caption={Exemplo de programa em AgentSpeak(L).}]
-		/* Agent helloWorld */
-		/* Initial beliefs and rules */
-		
-		/* Initial goals */			
-		!start.
-		/* Plans */
-		+!start : true <- aloha; ?continue(true);      !run (agentspeak).
-		+!run(A) : true <- mahalo(A).
-		\end{lstlisting}
-	\end{minipage}\hfill
-	\vspace{7mm}
-	
-	\begin{minipage}{\textwidth}
-		\lstset{style=codeStyle}
-		\begin{lstlisting}[language=Prolog, label={alg:exemplo-projeto-hello-world}, caption={Exemplo de projeto do AgentSpeak(Py).}]
-		/* Project Name */
-		helloWorld:
-		// List of agents
-		agents = [helloWorld]
-		environment = HelloWorldEnv
-		\end{lstlisting}
-	\end{minipage}\hfill
-\end{minipage}\hfill
-\begin{minipage}{.235\textwidth}
-	\lstset{style=codeStyle}
-	\begin{lstlisting}[language=Python, label={alg:exemplo-environment}, caption={Exemplo da descrição do ambiente em Python.}]
-	from environment import *
-	lt_continue = parse_literal('continue(true)')
-	
-	class HelloWorldEnv(Environment):
-		def __init__(self):
-			Environment.__init__(self)
-		
-		def execute_action(self, agent_name, action):
-			self.clear_perceptions()
-			getattr(self, action.functor)(list(action.args))
-		
-		def aloha(self, *args):
-			self.add_percept(lt_continue)
-			print('Aloha HelloWorldEnv!')
-		
-		def mahalo(self, *args):
-			print('Mahaloing with %s!' % ", ".join(map(str, *args)))
-	\end{lstlisting}
-\end{minipage}
-
-\section*{\huge Seção 4}
-      
-Tamanho atual das fontes:
+\Large
+\justifying
 \begin{itemize}
-	\item {\tiny \verb|\tiny| Font Size: \showfontsize}
-	\item {\scriptsize \verb|\scriptsize| Font Size: \showfontsize}
-	\item {\footnotesize \verb|\footnotesize| Font Size: \showfontsize}
-	\item {\small \verb|\small| Font Size: \showfontsize}
-	\item {\normalsize \verb|\normalsize| Font Size: \showfontsize}
-	\item {\large \verb|\large| Font Size: \showfontsize}
-	\item {\Large \verb|\Large| Font Size: \showfontsize}
-	\item {\LARGE \verb|\LARGE| Font Size: \showfontsize}
-	\item {\huge \verb|\huge| Font Size: \showfontsize}
-	\item {\Huge \verb|\Huge| Font Size: \showfontsize}
-	\item {\veryHuge \verb|\veryHuge| Font Size: \showfontsize}
+
+\item A imagem a seguir ilustra a pilha de protocolos utilizados na implementação deste projeto, bem como o detalhamento estrutural do protocolo proposto, intitulado Resource Mapping.
+
+
+\begin{center}
+\includegraphics[width=0.9\linewidth]{fig/fig2.png}
+\end{center}
+
+\item O campo Protocol Type é reservado para indicar a forma de encapsulamento do pacote.
+\item Atualmente existem dois tipos de Messages Types possíveis, keep alive e acknowledgement.
+\item Sequence Number tem o intuito de identificar o pacote enviado.
+\item O campo Epoch é utilizado para indicar alterações nos recursos providos pelo fog node.
+Sendo assim, quando um recurso é adicionado ou removido de um fog node, o campo Epoch é acrescido em uma unidade.
+\item O campo Hash utiliza a função de criptografia MD5 para validar a integridade dos demais campos contidos no pacote.
+
+\item Os fog nodes, a cada trinta segundos, enviam mensagens por multicast indicando que ainda estão em operação.
+Essas mensagens são do tipo keep alive e carregam consigo a época em que o fog node se encontra. 
+
+\item Ao receber as mensagens de keep alive, o fog node valida se já possui este IP mapeado em sua lista de recursos globais.
+Caso não possua o IP, deverá, então, realizar uma requisição CoAP para a URI /.well-known/core a fim de obter os recursos providos pelo fog node.
+Caso já possua o IP mapeado, deverá, então, verificar se a época recebida é diferente da que possui.
+Havendo divergência entre as épocas, uma nova requisição CoAP para a URI /.well-known/core deverá ser realizada com o intento de atualizar a listagem de recursos providos pelo node.
+
+\item Após receber a mensagem de keep alive e processá-la, outra mensagem, desta vez de acknowledgement, é enviada de volta ao remetente do keep alive.
+Desta forma, o remetente passa a ter conhecimento que o fog node ainda está em operação.
+
+\item Para que seja possível saber quando um membro deixou de fazer parte da névoa, o mecanismo proposto funcionada de tal forma que a cada três timeouts de acknowledgement
+o fog node é removido da lista de recursos globais.
+
 \end{itemize}
 
+\section*{\huge Experimentos}
 
+\Large
+\justifying
+\begin{itemize}
+
+\item O ambiente de testes da solução foi construído utilizando containers Docker e scripts Python.
+\item O gerenciamento dos containers na névoa é automatizado, portanto, é possível dinamicamente adicionarmos ou removermos containers da rede.
+\item O gerenciamento dos recursos de um determinado fog node também foi automatizado, sendo assim, é possível incluirmos ou retirarmos recursos dinamicamente.
+\item Os experimentos se mostraram satisfatórios, uma vez que foi possível criar um ambiente com mais de cem fog nodes e a sincronização dos recursos transcorreu normalmente.
+Esta limitação dá-se pelo fato do computador hospedeiro, que executa dos containers, não possuir recursos suficientes para a expansão da escalabilidade dos testes.
+
+
+\end{itemize}
 %---------------------------------------------------------------
 %	REFERENCES
 %---------------------------------------------------------------
 % Descomentar abaixo caso queira usar referências bibliográficas no poster
-%\vspace{-10mm}
-%\large
-%\color{NavyBlue}
-%\color{Black}
-%\raggedright
-%\bibliographystyle{plain}
-%\bibliography{poster}
+\vspace{-10mm}
+\large
+\color{NavyBlue}
+\color{Black}
+\raggedright
+\bibliographystyle{plain}
+\bibliography{poster}
 
 \end{multicols}
 

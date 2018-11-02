@@ -91,7 +91,7 @@
 \newcommand{\major}[1]{\def\@major{#1}}
 
 %Student emails
-\def\@email{nome.do.aluno@acad.pucrs.br}
+\def\@email{felipe.duro@acad.pucrs.br}
 \newcommand{\email}[1]{\def\@email{#1}}
 
 % ======================
