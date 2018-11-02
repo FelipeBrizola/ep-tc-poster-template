@@ -44,11 +44,8 @@
 
 
 \item A comunicação entre os \textit{fog nodes} e seus sensores, comumente chamados de \textit{edge devices}, ocorre utilizando o protocolo CoAP - Constrained Application Protocol.
-
 \item O CoAP implementa a RFC-6690 - Constrained RESTful Environments (CoRE) Link Format - que possui como finalidade a realização de REST em nodos com recursos limitados\cite{rfc6690}.
 \item CoAP também implementa a RFC-5785 que define como URI padrão o prefixo /.well-known/core. Este prefixo é utilizado para que o servidor exponha suas políticas e recursos disponíveis\cite{rfc5785}.
-
-% \item explicar o impacto disso, acessar recursos de outros nodes, manter o mapeamento de recursos, etc...
 
 \end{itemize}
 
@@ -71,19 +68,25 @@
 \item O campo Epoch é utilizado para indicar alterações nos recursos providos pelo fog node.
 Sendo assim, quando um recurso é adicionado ou removido de um fog node, o campo Epoch é acrescido em uma unidade.
 \item O campo Hash utiliza a função de criptografia MD5 para validar a integridade dos demais campos contidos no pacote.
+\end{itemize}
+
+
+
+\section*{\huge Funcionamento}
+
+\Large
+\justifying
+\begin{itemize}
 
 \item Os fog nodes, a cada trinta segundos, enviam mensagens por multicast indicando que ainda estão em operação.
 Essas mensagens são do tipo keep alive e carregam consigo a época em que o fog node se encontra. 
-
 \item Ao receber as mensagens de keep alive, o fog node valida se já possui este IP mapeado em sua lista de recursos globais.
 Caso não possua o IP, deverá, então, realizar uma requisição CoAP para a URI /.well-known/core a fim de obter os recursos providos pelo fog node.
 Caso já possua o IP mapeado, deverá, então, verificar se a época recebida é diferente da que possui.
 Havendo divergência entre as épocas, uma nova requisição CoAP para a URI /.well-known/core deverá ser realizada com o intento de atualizar a listagem de recursos providos pelo node.
-
 \item Após receber a mensagem de keep alive e processá-la, outra mensagem, desta vez de acknowledgement, é enviada de volta ao remetente do keep alive.
 Desta forma, o remetente passa a ter conhecimento que o fog node ainda está em operação.
-
-\item Para que seja possível saber quando um membro deixou de fazer parte da névoa, o mecanismo proposto funcionada de tal forma que a cada três timeouts de acknowledgement
+\item Para que seja possível saber quando um membro deixou de fazer parte da névoa, o mecanismo proposto funcionada de tal forma que a cada três timeouts consecutivos de acknowledgement
 o fog node é removido da lista de recursos globais.
 
 \end{itemize}
@@ -96,7 +99,7 @@ o fog node é removido da lista de recursos globais.
 
 \item O ambiente de testes da solução foi construído utilizando containers Docker e scripts Python.
 \item O gerenciamento dos containers na névoa é automatizado, portanto, é possível dinamicamente adicionarmos ou removermos containers da rede.
-\item O gerenciamento dos recursos de um determinado fog node também foi automatizado, sendo assim, é possível incluirmos ou retirarmos recursos dinamicamente.
+\item O gerenciamento dos recursos de um determinado fog node também foi automatizado, sendo assim, é possível incluirmos ou retirarmos edge devices dinamicamente.
 \item Os experimentos se mostraram satisfatórios, uma vez que foi possível criar um ambiente com mais de cem fog nodes e a sincronização dos recursos transcorreu normalmente.
 Esta limitação dá-se pelo fato do computador hospedeiro, que executa dos containers, não possuir recursos suficientes para a expansão da escalabilidade dos testes.
 
