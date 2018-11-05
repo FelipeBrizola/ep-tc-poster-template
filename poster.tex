@@ -34,14 +34,16 @@
 
 \item A computação em névoa é um termo relativamente novo e teve sua primeira definição, dada pela Cisco Systems em 2012, como uma extensão do modelo de computação em nuvem que provê armazenamento, computação e serviços de rede entre dispositivos finais e os servidores na nuvem \cite{DBLP:journals/corr/RomanLM16}.
 \item A computação em névoa tornou-se um paradigma próprio deixando de ser um apêndice da computação em nuvem. Deste novo paradigma surgiu o termo de \textit{fog node}, que abrange desde dispositivos finais com baixa capacidade computacional até servidores poderosos na nuvem.
-\item Os problemas referentes à padronização, descoberta e sincronização são os motivadores deste trabalho, uma vez que atualmente não existem mecanismos no qual um membro da névoa, seja ele um dispositivo com limitações de memória e processamento ou um computador robusto, mapeiem os recursos disponíveis e divulgue os seus na rede.
-\item Para que este objetivo fosse atingido, foi projetado um protocolo de rede simples que é executado em redes locais e que atua de maneira automatizada e desentralizada no processo de descobrimento e sincronização de recursos.
+\item Os problemas referentes à padronização, descoberta e sincronização são os motivadores deste trabalho, uma vez que atualmente não existem mecanismos no qual um membro da névoa, seja um dispositivo com limitações de memória e processamento ou um computador robusto, mapeiem os recursos disponíveis e divulgue os seus na rede.
 \item A computação em névoa pode ser ilustrada pela imagem abaixo, na qual demonstra uma arquitetura base deste cenário.
 
 \begin{center}
-\includegraphics[width=0.9\linewidth]{fig/fig1.pdf}
+\includegraphics[width=0.7\linewidth]{fig/fig1.pdf}
 \end{center}
 
+\item Seguindo a organização arquitetural da imagem acima, a proposta deste trabalho é fazer com que um \textit{fog node} conheça, de forma autônoma e descentralizada, os recursos disponibilizados por seus vizinhos.
+Assim, cada \textit{fog node} saberá quais são os \textit{edge devices} disponíveis na rede, portanto,
+o nodo que possui o sensor de chuva saberia da existencia de um outro nodo na rede capaz de medir a temperatura, por exemplo.
 
 \item A comunicação entre os \textit{fog nodes} e seus sensores, comumente chamados de \textit{edge devices}, ocorre utilizando o protocolo CoAP - Constrained Application Protocol.
 \item O CoAP implementa a RFC-6690 - Constrained RESTful Environments (CoRE) Link Format - que possui como finalidade a realização de REST em nodos com recursos limitados\cite{rfc6690}.
@@ -59,7 +61,7 @@
 
 
 \begin{center}
-\includegraphics[width=0.9\linewidth]{fig/fig2.png}
+\includegraphics[width=0.7\linewidth]{fig/fig2.png}
 \end{center}
 
 \item O campo Protocol Type é reservado para indicar a forma de encapsulamento do pacote.
@@ -91,6 +93,10 @@ o fog node é removido da lista de recursos globais.
 
 \end{itemize}
 
+\begin{center}
+    \includegraphics[width=0.7\linewidth]{fig/fig3.png}
+\end{center}
+
 \section*{\huge Experimentos}
 
 \Large
@@ -98,10 +104,12 @@ o fog node é removido da lista de recursos globais.
 \begin{itemize}
 
 \item O ambiente de testes da solução foi construído utilizando containers Docker e scripts Python.
-\item O gerenciamento dos containers na névoa é automatizado, portanto, é possível dinamicamente adicionarmos ou removermos containers da rede.
+% \item O gerenciamento dos containers na névoa é automatizado, portanto, é possível dinamicamente adicionarmos ou removermos containers da rede.
+\item O gerenciamento dos containers na névoa foi automatizado, deste modo é possível adicionarmos ou removermos fog nodes dinamicamente.
 \item O gerenciamento dos recursos de um determinado fog node também foi automatizado, sendo assim, é possível incluirmos ou retirarmos edge devices dinamicamente.
-\item Os experimentos se mostraram satisfatórios, uma vez que foi possível criar um ambiente com mais de cem fog nodes e a sincronização dos recursos transcorreu normalmente.
+\item Os experimentos se mostraram satisfatórios, uma vez que foi possível criar um ambiente com mais de quarenta fog nodes e a sincronização dos recursos transcorreu normalmente.
 Esta limitação dá-se pelo fato do computador hospedeiro, que executa dos containers, não possuir recursos suficientes para a expansão da escalabilidade dos testes.
+
 
 
 \end{itemize}
